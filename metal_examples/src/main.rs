@@ -12,7 +12,8 @@ pub mod alloc;
 pub mod utils;
 use crate::matrix::Matrix;
 
-const LIB_DATA_MEMORY: &[u8] = include_bytes!("memory.metallib");
+
+const LIB_DATA_MATHCAL: &[u8] = include_bytes!("math_cal.metallib");
 
 const LIB_DATA_DOTPROD: &[u8] = include_bytes!("dotprod.metallib");
 
@@ -31,7 +32,7 @@ pub fn dotprod(v: &[u32], w: &[u32]) -> Vec<u32> {
     let device: &DeviceRef = &Device::system_default().expect("No device found");
 
     // represents the library which contains the kernel.
-    let lib = device.new_library_with_data(LIB_DATA_DOTPROD).unwrap();
+    let lib = device.new_library_with_data(LIB_DATA_MATHCAL).unwrap();
     // create function pipeline.
     // this compiles the function, so a pipline can't be created in performance sensitive code.
     let function = lib.get_function("dot_product", None).unwrap();
@@ -143,7 +144,7 @@ fn main() {
     let device: &metal::DeviceRef = &Device::system_default().expect("No device found");
     let queue = device.new_command_queue();
 
-    let lib = device.new_library_with_data(LIB_DATA_MATRIXPROD).unwrap();
+    let lib = device.new_library_with_data(LIB_DATA_MATHCAL).unwrap();
 
     let function = lib.get_function("mul_matrices", None).unwrap();
     let pipeline = device
@@ -169,7 +170,7 @@ fn main() {
     //Memory ops
 
     let device: &DeviceRef = &Device::system_default().expect("No device found");
-    let lib = device.new_library_with_data(LIB_DATA_MEMORY).unwrap();
+    let lib = device.new_library_with_data(LIB_DATA_MATHCAL).unwrap();
     let kernel = lib.get_function("assign", None).unwrap();
 
     let pipeline_state_descriptor = ComputePipelineDescriptor::new();
