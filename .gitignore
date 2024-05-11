@@ -5,6 +5,8 @@ loss.html
 .hf_token
 *target
 __pycache__
+*.metallib
+*.air
 *.o
 *.a
 *.so
